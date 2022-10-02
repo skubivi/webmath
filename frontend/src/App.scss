@@ -1,11 +1,27 @@
 .App {
   text-align: center;
   display: flex;
+  min-height: 100vmin;
+  background-color: #312e2b;
+  color: #FFFFFFCC;
   
   .Sidebar {
     flex-basis: 10%;
     display: flex;
     flex-direction: column;
+    background-color: rgba($color: #000000, $alpha: 0.2);
+    
+    a:hover {
+      background-color: rgba($color: #000000, $alpha: 0.4);
+    }
+
+    a:active {
+      color: #FFFFFFCC;
+    }
+
+    a {
+      color: #FFFFFFCC;
+    }
   }
 
   .Main {
@@ -14,4 +30,10 @@
     flex-direction: column;
   }
 }
+
+a {
+  text-decoration: none;
+}
+
+
 

@@ -8,7 +8,6 @@ import Battles from './Battles';
 const Main = (props) => {
     return (
         <div className="Main">
-            <h1>Main</h1>
             <Routes>
                 <Route path='/home' element={<Home/>} />
                 <Route path='/videos' element={<Videos />} />
