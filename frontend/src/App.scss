@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+  display: flex;
+  
+  .Sidebar {
+    flex-basis: 10%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .Main {
+    flex-basis: 90%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
