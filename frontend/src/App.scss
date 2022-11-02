@@ -19,6 +19,67 @@ $text-color: #FFFFFFCC;
   background-color: $bg-color;
   color: $text-color;
   font-family: 'Montserrat';
+
+  .modal {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: scale(0);
+
+    .modal-content {
+      padding: 20px;
+      border-radius: 12px;
+      background-color: white;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h1 {
+        margin: 0;
+        margin-top: 30px;
+      }
+      h4 {
+        margin: 0;
+        margin-top: 10px;
+        margin-bottom: 50px;
+      }
+      input {
+        min-width: 400px;
+        min-height: 30px;
+        border-radius: 5px;
+        border-width: 1px;
+        border-color: gray;
+        margin-bottom: 10px;
+      }
+      button {
+        background-color: #7fa650;
+        color: white;
+        margin-top: 15px;
+        border-radius: 10px;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        width: 80%;
+        height: 70px;
+        border-width: 5px;
+        border-color: #698a42;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .modal.active {
+    transform: scale(1);
+  }
   
   .sidebar {
     flex-basis: 10%;
