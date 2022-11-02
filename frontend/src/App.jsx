@@ -1,4 +1,5 @@
 import './App.scss';
+import ModalLogIn from './Components/Auth/ModalLogIn';
 import ModalSignUp from './Components/Auth/ModalSignUp';
 import Main from './Components/Main/Main';
 import Sidebar from './Components/Sidebar/Sidebar';
@@ -9,6 +10,7 @@ function App() {
       <Sidebar />
       <Main />
       <ModalSignUp />
+      <ModalLogIn />
     </div>
   );
 }

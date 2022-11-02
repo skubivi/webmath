@@ -1,11 +1,24 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { showLogIn } from "../../redux/actionCreators/showLogIn";
 
-const LogIn = ({className}) => {
+const LogIn = (props) => {
+    const handleClick = () => {
+        props.showLogIn();
+    }
+
     return (
-        <div className={className}>
-            <button className="login-button">Вход</button>
+        <div className={props.className}>
+            <button className="login-button" onClick={handleClick}>Вход</button>
         </div>
     )
 }
 
-export default LogIn;
+function mapDispatchToProps (dispatch) {
+    return {
+        showLogIn: bindActionCreators(showLogIn, dispatch)
+    }
+}
+
+export default connect(null, mapDispatchToProps)(LogIn);
