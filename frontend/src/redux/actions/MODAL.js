@@ -1,0 +1,2 @@
+export const SHOW_SIGNUP = 'MODAL/SHOW_SIGNUP'
+export const HIDE_SIGNUP = 'MODAL/HIDE_SIGNUP'
