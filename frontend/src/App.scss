@@ -1,33 +1,120 @@
-.App {
+$bg-color: #312e2b;
+
+$bg-login-color: #7fa650;
+$bg-sign-up-color: #353331;
+
+$bg-login-color-hover: #96bc49;
+$bg-sign-up-color-hover: #484644;
+
+$sidebar-bg: rgba(0, 0, 0, 0.2);
+$sidebar-bg-hover: rgba(0, 0, 0, 0.4);
+
+$text-color: #FFFFFFCC;
+
+.app {
+  height: 100vmin;
   text-align: center;
   display: flex;
-  min-height: 100vmin;
-  background-color: #312e2b;
-  color: #FFFFFFCC;
+  min-height: 100vh;
+  background-color: $bg-color;
+  color: $text-color;
+  font-family: 'Montserrat';
   
-  .Sidebar {
+  .sidebar {
     flex-basis: 10%;
     display: flex;
     flex-direction: column;
-    background-color: rgba($color: #000000, $alpha: 0.2);
+    background-color: $sidebar-bg;
     
     a:hover {
-      background-color: rgba($color: #000000, $alpha: 0.4);
+      background-color: $sidebar-bg-hover;
     }
 
     a:active {
-      color: #FFFFFFCC;
+      color: $text-color;
     }
 
     a {
-      color: #FFFFFFCC;
+      color: $text-color;
+    }
+
+    .sidebar-logo {
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      width: 100%;
+      height: 70px;
+      img {
+        width: 100%;
+        height: 50;
+        margin: 10px 0 0 0;
+      }
+    }
+
+    .sidebar-child {
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      height: 80%;
+      width: 70%;
+      border-radius: 5px;
+      color: $text-color;
+      border: 0;
+    }
+
+    .login-button {
+      background-color: $bg-login-color
+    }
+
+    .login-button:hover {
+      background-color: $bg-login-color-hover
+    }
+
+    .sign-up-button {
+      background-color: $bg-sign-up-color;
+    }
+
+    .sign-up-button:hover {
+      background-color: $bg-sign-up-color-hover
+    }
+
+    button:hover {
+      cursor: pointer;
     }
   }
 
-  .Main {
+  .main {
     flex-basis: 90%;
-    display: flex;
-    flex-direction: column;
+
+    .wrapper {
+      max-width: 70%;
+      margin-left: 15%;
+
+      .home{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .row {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+          justify-content: space-between;
+        }
+        
+        .history {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+        }
+      }
+    }
   }
 }
 

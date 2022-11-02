@@ -1,16 +1,18 @@
 import React from "react";
-import Battles from "./Battles";
-import Logo from "./Logo";
-import Videos from "./Videos";
+import BattlesLink from "./BattlesLink";
+import LogoLink from "./LogoLink";
 
 import { Link } from 'react-router-dom'
+import LogIn from "../Auth/LogIn";
+import SignUp from "../Auth/SignUp";
 
-const Sidebar = (props) => {
+const Sidebar = () => {
     return (
-        <nav className="Sidebar">
-            <Link to='/home'><Logo /></Link>
-            <Link to='/videos'><Videos /></Link>
-            <Link to='battles'><Battles /></Link>
+        <nav className="sidebar">
+            <Link to='/home'><LogoLink className="sidebar-child sidebar-logo"/></Link>
+            <Link to='/battles'><BattlesLink className="sidebar-child" /></Link>
+            <SignUp className="sidebar-child" />
+            <LogIn className="sidebar-child" />
         </nav>
     )
 }
