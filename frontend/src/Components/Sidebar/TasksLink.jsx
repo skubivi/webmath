@@ -1,11 +1,11 @@
 import React from "react";
 
-const BattlesLink = ({className}) => {
+const TasksLink = ({className}) => {
     return(
         <div className={className}>
-            <h1>Баттлы</h1>
+            <p>Задачи</p>
         </div>
     )
 }
 
-export default BattlesLink;
+export default TasksLink;

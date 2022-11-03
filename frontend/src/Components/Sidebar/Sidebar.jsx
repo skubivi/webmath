@@ -1,5 +1,5 @@
 import React from "react";
-import BattlesLink from "./BattlesLink";
+import TasksLink from "./TasksLink";
 import LogoLink from "./LogoLink";
 
 import { Link } from 'react-router-dom'
@@ -10,7 +10,7 @@ const Sidebar = () => {
     return (
         <nav className="sidebar">
             <Link to='/home'><LogoLink className="sidebar-child sidebar-logo"/></Link>
-            <Link to='/battles'><BattlesLink className="sidebar-child" /></Link>
+            <Link to='/tasks'><TasksLink className="sidebar-child" /></Link>
             <SignUp className="sidebar-child" />
             <LogIn className="sidebar-child" />
         </nav>
