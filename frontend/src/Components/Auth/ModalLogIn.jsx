@@ -5,7 +5,7 @@ import { hideLogIn } from "../../redux/actionCreators/hideLogIn";
 
 import logo from "../../assets/Images/LogoHomeBlackWebsite.png"
 
-import Image from "../Image";
+import Image from "../RepeatedComponents/Image";
 
 const ModalLogIn = (props) => {
     const handleClick = () => {

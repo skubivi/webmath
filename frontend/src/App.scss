@@ -12,7 +12,6 @@ $sidebar-bg-hover: rgba(0, 0, 0, 0.4);
 $text-color: #FFFFFFCC;
 
 .app {
-  height: 100vmin;
   width: 100vw;
   text-align: center;
   display: flex;
@@ -215,6 +214,7 @@ $text-color: #FFFFFFCC;
         height: 100%;
 
         .tasks-card {
+          color: $text-color;
           display: flex;
           height: 80%;
           align-items: center;
@@ -228,8 +228,8 @@ $text-color: #FFFFFFCC;
           border-color: $bg-login-color;
           flex-shrink: 0;
           overflow: hidden;
-
-          p {
+          
+          .link {
             position: absolute;
           }
 
@@ -279,6 +279,85 @@ $text-color: #FFFFFFCC;
         .all-tasks {
           img {
             margin-left: 510px;
+          }
+        }
+      }
+
+      .task-catalog {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .task {
+          background-color: $sidebar-bg;
+          display: flex;
+          flex-direction: row;
+          height: 180px;
+          border-radius: 25px;
+          margin-bottom: 30px;
+          overflow: hidden;
+          align-items: center;
+
+          transition: background-color 0.5s;
+
+          .task-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 25px;
+            height: 180px;
+            width: 180px;
+            min-width: 180px;
+            max-width: 180px;
+            overflow: hidden;
+            background-color: black;
+
+            .img-hover {
+              position: absolute;
+              width: 180px;
+              opacity: 0;
+              transition: 0.5s;
+            }
+
+            img {
+              position: relative;
+              height: auto;
+              width: 100%;
+              opacity: 1;
+              transition: opacity 0.5s;
+            }
+          }
+
+          .task-body {
+            flex-grow: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-left: 25px;
+            
+            .task-title {
+              text-align: left;
+              height: 70px;
+            }
+
+            .task-text {
+              text-align: left;
+            }
+          }
+        }
+
+        .task:hover {
+          background-color: $sidebar-bg-hover;
+          cursor: pointer;
+
+          .task-image {
+            img {
+              opacity: 0.05;
+            }
+
+            .img-hover {
+              opacity: 1;
+            }
           }
         }
       }

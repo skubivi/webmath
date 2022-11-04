@@ -2,6 +2,7 @@ import React from "react";
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from "./Home";
+import MonthlyTasks from "./MonthlyTasks";
 import Tasks from './Tasks';
 
 const Main = (props) => {
@@ -11,6 +12,7 @@ const Main = (props) => {
                 <Routes>
                     <Route path='/home' element={<Home/>} />
                     <Route path='/tasks' element={<Tasks />} />
+                    <Route path='/tasks/monthly' element={<MonthlyTasks />} />
                     <Route path='' element={<Navigate to='/home' />}></Route>
                 </Routes>
             </div>

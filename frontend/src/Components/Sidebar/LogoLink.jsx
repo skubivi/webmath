@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "../Image";
+import Image from "../RepeatedComponents/Image";
 
 import logo from "../../assets/Images/LogoHomeWebsite.png"
 
