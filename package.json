@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alkskjelett/webmath.git"
+    "url": "git+https://github.com/skubivi/webmath.git"
   },
   "keywords": [
     "mern",
@@ -17,7 +17,7 @@
   "author": "Stepan Vasilev <altair100001@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alkskjelett/webmath/issues"
+    "url": "https://github.com/skubivi/webmath/issues"
   },
-  "homepage": "https://github.com/alkskjelett/webmath#readme"
+  "homepage": "https://github.com/skubivi/webmath#readme"
 }
