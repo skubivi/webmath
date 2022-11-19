@@ -11,6 +11,10 @@ $sidebar-bg-hover: rgba(0, 0, 0, 0.4);
 
 $text-color: #FFFFFFCC;
 
+html {
+  overflow-x: hidden;
+}
+
 .app {
   width: 100vw;
   text-align: center;
@@ -291,73 +295,79 @@ $text-color: #FFFFFFCC;
         .task {
           background-color: $sidebar-bg;
           display: flex;
-          flex-direction: row;
-          height: 180px;
-          border-radius: 25px;
+          flex-direction: column;
+          min-height: 3em;
           margin-bottom: 30px;
           overflow: hidden;
-          align-items: center;
-
-          transition: background-color 0.5s;
-
-          .task-image {
+          align-items: flex-start;
+          justify-content: space-evenly;
+          border-width: 2px;
+          border-color: $bg-login-color;
+          border-style: solid;
+            
+          .task-title {
+            width: 90%;
+            margin-left: 5%;
+            text-align: left;
             display: flex;
+            flex-direction: row;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            margin-left: 25px;
-            height: 180px;
-            width: 180px;
-            min-width: 180px;
-            max-width: 180px;
-            overflow: hidden;
-            background-color: black;
 
-            .img-hover {
-              position: absolute;
-              width: 180px;
-              opacity: 0;
-              transition: 0.5s;
-            }
+            button {
+              height: 2.5em;
+              width: 2.5em;
+              border-width: 2px;
+              border-style: solid;
+              border-color: $bg-sign-up-color-hover;
 
-            img {
-              position: relative;
-              height: auto;
-              width: 100%;
-              opacity: 1;
-              transition: opacity 0.5s;
+              &:hover {
+                cursor: pointer;
+              }
             }
           }
 
           .task-body {
-            flex-grow: 1;
-            height: 100%;
+            width: 100%;
+            height: max-content;
+            transition: transform 0.5s;
+            transform: scaleY(1);
+            transform-origin: top;
             display: flex;
             flex-direction: column;
-            margin-left: 25px;
-            
-            .task-title {
-              text-align: left;
-              height: 70px;
+            align-items: center;
+            hr {
+              width: 100%;
+              border: none;
+              height: 2px;
+              color: $bg-login-color;
+              background-color: $bg-login-color;
             }
+            .image-container {
+              margin: 10px;
+              max-width: 50%;
+            }
+            button {
+              background-color: $bg-login-color;
+              border-radius: 5px;
+              color: $text-color;
+              border: 0;
+              height: 3em;
+              font-size: 0.8em;
+              align-self: flex-end;
+              margin-bottom: 20px;
+              margin-right: 40px;
 
-            .task-text {
-              text-align: left;
+              &:hover {
+                cursor: pointer;
+                background-color: $bg-login-color-hover;
+              }
             }
           }
-        }
 
-        .task:hover {
-          background-color: $sidebar-bg-hover;
-          cursor: pointer;
-
-          .task-image {
-            img {
-              opacity: 0.05;
-            }
-
-            .img-hover {
-              opacity: 1;
-            }
+          .task-body.none {
+            transform: scaleY(0);
+            max-height: 0;
           }
         }
       }

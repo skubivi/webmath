@@ -1,0 +1,23 @@
+{
+  "name": "web-math",
+  "version": "1.0.0",
+  "description": "Website for solving math problems",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alkskjelett/webmath.git"
+  },
+  "keywords": [
+    "mern",
+    "react"
+  ],
+  "author": "Stepan Vasilev <altair100001@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alkskjelett/webmath/issues"
+  },
+  "homepage": "https://github.com/alkskjelett/webmath#readme"
+}

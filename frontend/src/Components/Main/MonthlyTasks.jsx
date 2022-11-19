@@ -27,6 +27,7 @@ const MonthlyTasks = () => {
             <h1>Ежемесячные задачи</h1>
             <Task id={testState[0].id} title={testState[0].title} task={testState[0].task} image={testState[0].image}/>
             <Task id={testState[1].id} title={testState[1].title} task={testState[1].task} image={testState[1].image}/>
+            <Task id={testState[2].id} title={testState[2].title} task={testState[2].task} image={testState[2].image}/>
         </div>
     )
 }
