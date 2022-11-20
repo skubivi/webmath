@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/skubivi/webmath#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "config": "^3.3.8",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.8.0",
     "sequelize": "^6.25.7"
   },
