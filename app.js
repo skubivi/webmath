@@ -2,6 +2,8 @@ const express = require('express')
 const config = require('config')
 const sequelize = require('./db')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
+const path = require('path')
 
 const models = require('./models/models')
 const router = require('./routes/index')
@@ -11,6 +13,8 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(fileUpload({}))
 app.use('/api', router)
 
 app.use(errorHandler)

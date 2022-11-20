@@ -12,9 +12,10 @@ const Users = sequelize.define('users', {
 
 const Tasks = sequelize.define('tasks', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    task: {type: DataTypes.STRING},
+    title: {type: DataTypes.STRING},
+    task: {type: DataTypes.TEXT},
     image: {type: DataTypes.STRING},
-    textSolution: {type: DataTypes.STRING},
+    textSolution: {type: DataTypes.TEXT},
     imageSolution: {type: DataTypes.STRING}
 })
 
@@ -24,16 +25,17 @@ const MonthlyTasks = sequelize.define('monthly_tasks', {
 
 const CompletedTasks = sequelize.define('completed_tasks', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    userTextSolution: {type: DataTypes.STRING},
-    userImageSolution: {type: DataTypes.STRING}
+    userTextSolution: {type: DataTypes.TEXT},
+    userImageSolution: {type: DataTypes.STRING},
+    checked: {type: DataTypes.BOOLEAN, defaultValue: false}
 })
 
 const ProposedTasks = sequelize.define('proposed_tasks', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     task: {type: DataTypes.STRING},
     image: {type: DataTypes.STRING},
-    textSolution: {type: DataTypes.STRING},
-    imageSolution: {type: DataTypes.STRING}
+    textSolution: {type: DataTypes.TEXT},
+    imageSolution: {type: DataTypes.STRING},
 })
 
 const Videos = sequelize.define('videos', {
