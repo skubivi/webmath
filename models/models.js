@@ -16,7 +16,8 @@ const Tasks = sequelize.define('tasks', {
     task: {type: DataTypes.TEXT},
     image: {type: DataTypes.STRING},
     textSolution: {type: DataTypes.TEXT},
-    imageSolution: {type: DataTypes.STRING}
+    imageSolution: {type: DataTypes.STRING},
+    used: {type: DataTypes.BOOLEAN, defaultValue: false}
 })
 
 const MonthlyTasks = sequelize.define('monthly_tasks', {
