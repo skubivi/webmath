@@ -59,18 +59,26 @@ class UserController {
     }
 
     async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.username)
-        return res.json({token})
+        try {
+            const token = generateJwt(req.user.id, req.user.email, req.user.role, req.user.username)
+            return res.json({token})
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 
     async getAll(req, res, next) {
-        let {limit, page} = req.query
-        limit = limit || 10
-        page = page || 1
-        let offset = (page - 1) * limit
-        let users
-        users = await Users.findAndCountAll({attributes: ['id', 'username', 'rating'], order: [['rating', 'DESC']], limit, offset})
-        return res.json(users)
+        try {
+            let {limit, page} = req.query
+            limit = limit || 10
+            page = page || 1
+            let offset = (page - 1) * limit
+            let users
+            users = await Users.findAndCountAll({attributes: ['id', 'username', 'rating'], order: [['rating', 'DESC']], limit, offset})
+            return res.json(users)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 }
 

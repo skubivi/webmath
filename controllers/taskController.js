@@ -2,6 +2,7 @@ const uuid = require('uuid')
 const path = require('path')
 const { Tasks, ProposedTasks, CompletedTasks } = require('../models/models')
 const ApiError = require('../error/ApiError')
+const { Op } = require('sequelize')
 
 class TaskController {
     async addTask(req, res, next) {
@@ -93,54 +94,75 @@ class TaskController {
     }
 
     async deleteProposedTask(req, res, next) {
-        const {id} = req.params
-        const task = await ProposedTasks.findByPk(id)
-        if (task) {
-            await task.destroy();
-            return res.json("Задача успешно удалена")
+        try {
+            const {id} = req.params
+            const task = await ProposedTasks.findByPk(id)
+            if (task) {
+                await task.destroy();
+                return res.json("Задача успешно удалена")
+            }
+            return next(ApiError.badRequest("Такой задачи не существует"))
         }
-        return next(ApiError.badRequest("Такой задачи не существует"))
+        catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 
     async getAllProposed(req, res, next) {
-        let {limit, page} = req.query
-        limit = limit || 10
-        page = page || 1
-        let offset = (page - 1) * limit
-        let tasks = await ProposedTasks.findAndCountAll({limit, offset})
-        return res.json(tasks)
+        try {
+            let {limit, page} = req.query
+            limit = limit || 10
+            page = page || 1
+            let offset = (page - 1) * limit
+            let tasks = await ProposedTasks.findAndCountAll({limit, offset})
+            return res.json(tasks)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 
     async getOneProposed(req, res, next) {
-        const {id} = req.params
-        const userId = req.user.id
-        const userRole = req.user.role
-        const task = await ProposedTasks.findByPk(id)
-        if(!task) {
-            next(ApiError.badRequest("Задача не найдена"))
+        try {
+            const {id} = req.params
+            const userId = req.user.id
+            const userRole = req.user.role
+            const task = await ProposedTasks.findByPk(id)
+            if(!task) {
+                next(ApiError.badRequest("Задача не найдена"))
+            }
+            if (userRole === 'admin' || userId === task.userId){
+                return res.json(task)
+            }
+            return next(ApiError.forbidden("Доступ запрещён"))
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
         }
-        if (userRole === 'admin' || userId === task.userId){
-            return res.json(task)
-        }
-        return next(ApiError.forbidden("Доступ запрещён"))
     }
 
     async getAll(req, res) {
-        let {limit, page} = req.query
-        limit = limit || 10
-        page = page || 1
-        let offset = (page - 1) * limit
-        let tasks = await Tasks.findAndCountAll({limit, offset})
-        return res.json(tasks)
+        try {
+            let {limit, page} = req.query
+            limit = limit || 10
+            page = page || 1
+            let offset = (page - 1) * limit
+            let tasks = await Tasks.findAndCountAll({limit, offset})
+            return res.json(tasks)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 
     async getOne(req, res, next) {
-        const {id} = req.params
-        const task = await Tasks.findByPk(id)
-        if(!task) {
-            return next(ApiError.badRequest("Задача не найдена"))
+        try {
+            const {id} = req.params
+            const task = await Tasks.findByPk(id)
+            if(!task) {
+                return next(ApiError.badRequest("Задача не найдена"))
+            }
+            return res.json(task)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
         }
-        return res.json(task)
     }
 
     async addCompletedTask(req, res, next) {
@@ -175,21 +197,97 @@ class TaskController {
     }
 
     async getAllCompleted(req, res, next) {
-        let {limit, page} = req.query
-        limit = limit || 10
-        page = page || 1
-        let offset = (page - 1) * limit
-        let tasks = await CompletedTasks.findAndCountAll({limit, offset})
-        return res.json(tasks)
+        try {
+            let {limit, page} = req.query
+            limit = limit || 10
+            page = page || 1
+            let offset = (page - 1) * limit
+            let tasks = await CompletedTasks.findAndCountAll({limit, offset})
+            return res.json(tasks)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
+    }
+
+    async getMyCompleted(req, res, next) {
+        try {
+            let {limit, page} = req.query
+            limit = limit || 10
+            page = page || 1
+            let offset = (page - 1) * limit
+            const userId = req.user.id
+            let tasks = await CompletedTasks.findAndCountAll({
+                where: {userId},
+                limit, 
+                offset
+            })
+            return res.json(tasks)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
+    }
+
+    async getMyOneCompleted(req, res, next) {
+        try {
+            const taskId = req.params.id
+            const userId = req.user.id
+            let task = await CompletedTasks.findOne({
+                where: {
+                    [Op.and]: [
+                        {taskId},
+                        {userId}
+                    ]
+                }
+            })
+            if (!task) {
+                return next(ApiError.badRequest("Решение не найдено"))
+            }
+            return res.json(task)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 
     async getOneCompleted(req, res, next) {
-        const {id} = req.params
-        const task = await CompletedTasks.findByPk(id)
-        if(!task) {
-            return next(ApiError.badRequest("Задача не найдена"))
+        try {
+            const taskId = req.params.id
+            const userId = req.query.userId
+            let task = await CompletedTasks.findOne({
+                where: {
+                    [Op.and]: [
+                        {taskId},
+                        {userId}
+                    ]
+                }
+            })
+            if(!task) {
+                return next(ApiError.badRequest("Решение не найдено"))
+            }
+            return res.json(task)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
         }
-        return res.json(task)
+    }
+
+    async getUserCompletedList(req, res, next) {
+        try {
+            const userId = req.params.userId
+
+            let {limit, page} = req.query
+            limit = limit || 10
+            page = page || 1
+            let offset = (page - 1) * limit
+
+            let tasks = await CompletedTasks.findAndCountAll({
+                attributes: ['id', 'taskId'],
+                where: {userId},
+                limit,
+                offset
+            })
+            return res.json(tasks)
+        } catch(e) {
+            return next(ApiError.badRequest(e.message))
+        }
     }
 }
 

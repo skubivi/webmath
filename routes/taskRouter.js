@@ -18,6 +18,9 @@ router.get('/proposed/:id', checkProposed, taskController.getOneProposed)
 
 router.post('/completed/', verify, taskController.addCompletedTask)
 router.get('/completed/all', checkRole('admin'), taskController.getAllCompleted)
+router.get('/completed/my', verify, taskController.getMyCompleted)
+router.get('/completed/my-one/:id', verify, taskController.getMyOneCompleted)
 router.get('/completed/:id', checkCompleted, taskController.getOneCompleted)
+router.get('/completed/list/:userId', taskController.getUserCompletedList)
 
 module.exports = router

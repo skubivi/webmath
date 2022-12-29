@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
         next()
     }
     try {
-        const {id} = req.params
+        const taskId = req.params.id
         
         const token = req.headers.authorization.split(' ')[1]
         if (!token) {
@@ -19,7 +19,7 @@ module.exports = async function (req, res, next) {
         const task = await CompletedTasks.findAll({
             where: {
                 [Op.and]: [
-                    {id},
+                    {taskId},
                     {userId}
                 ]
             }

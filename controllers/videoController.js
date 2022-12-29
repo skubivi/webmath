@@ -20,14 +20,18 @@ class videoController {
     }
 
     async getOne(req, res, next) {
-        const id = req.params
-        const video = Videos.findOne({where: {
-            taskId: id
-        }})
-        if (!video) {
-            return res.json({})
+        try {
+            const id = req.params
+            const video = Videos.findOne({where: {
+                taskId: id
+            }})
+            if (!video) {
+                return res.json({})
+            }
+            return res.json(video)
+        } catch (e) {
+            return next(ApiError.badRequest(e.message))
         }
-        return res.json(video)
     }
 }
 
