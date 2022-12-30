@@ -1,4 +1,5 @@
 import './App.scss';
+import Alerts from './Components/Alert/Alerts';
 import ModalLogIn from './Components/Auth/ModalLogIn';
 import ModalSignUp from './Components/Auth/ModalSignUp';
 import Main from './Components/Main/Main';
@@ -11,6 +12,7 @@ function App() {
       <Main />
       <ModalSignUp />
       <ModalLogIn />
+      <Alerts />
     </div>
   );
 }

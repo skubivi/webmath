@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import { modalReducer } from "./modalReducer";
+import { alertReducer } from "./alertReducer";
 
 export const rootReducer = combineReducers({
-    modal: modalReducer
+    modal: modalReducer,
+    alerts: alertReducer
 })
