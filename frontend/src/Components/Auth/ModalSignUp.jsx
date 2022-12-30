@@ -1,21 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { hideSignUp } from "../../redux/actionCreators/hideSignUp";
+import { showAlert } from '../../redux/actionCreators/showAlert';
+import { hideAlert } from '../../redux/actionCreators/hideAlert';
+import { registration } from "../../http/userAPI";
 
 const ModalSignUp = (props) => {
+
+    const initialState = {
+        email: '',
+        username: '',
+        password: ''
+    }
+
+    const [state, setState] = useState(initialState)
+
     const handleClick = () => {
         props.hideSignUp();
     }
+
+    const handleButtonClick = async () => {
+        try {
+            if(!state.email.trim() || !state.username.trim() || !state.password.trim()) {
+                const message = !state.email.trim() ?
+                'Поле email не может быть пустым' :
+                !state.username.trim() ?
+                'Поле username не может быть пустым' :
+                'Поле password не может быть пустым'
+                const id = Date.now().toString();
+                const title = 'Ошибка'
+                const newAlert = {message, title, id}
+                props.showAlert(newAlert)
+                setTimeout(() => {
+                    props.hideAlert(newAlert);
+                }, 5000)
+                return
+            }
+            if(state.email.indexOf('@') === -1 || state.email.indexOf('.') === -1) {
+                const message = 'Поле email введено некорректно'
+                const id = Date.now().toString();
+                const title = 'Ошибка'
+                const newAlert = {message, title, id}
+                props.showAlert(newAlert)
+                setTimeout(() => {
+                    props.hideAlert(newAlert);
+                }, 5000)
+                return
+            }
+            const response = await registration(state.email, state.password, state.username)
+            console.log(response)
+        } catch (e) {
+            const message = e.response.data.message
+            const title = 'Ошибка'
+            const id = Date.now().toString()
+            const newAlert = {message, title, id}
+            props.showAlert(newAlert)
+            setTimeout(() => {
+                props.hideAlert(newAlert);
+            }, 5000)
+        }
+    }
+
+    const handleInputChange = (e) => {
+        setState((prev)  => ({
+            ...prev, ...{
+                [e.target.name]: e.target.value
+            }
+        }))
+    }
+
     return (
-        <div className={props.active ? 'modal active': 'modal'} onClick={handleClick}>
+        <div className={props.active ? 'modal active': 'modal'}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
+                <div className="close" onClick={handleClick}>&#10006;</div>
                 <h1>Присоединяйтесь</h1>
                 <h4>и Решайте Задачи Прямо Сейчас!</h4>
-                <input placeholder="Username" type='text'/>
-                <input placeholder="Email" type='email'/>
-                <input placeholder="Password" type='password'/>
-                <button>Зарегестрироваться</button>
+                <input placeholder="Email" type='email' value={state.email} name='email' onChange={handleInputChange}/>
+                <input placeholder="Username" type='text' value={state.username} name='username' onChange={handleInputChange}/>
+                <input placeholder="Password" type='password' value={state.password} name='password' onChange={handleInputChange}/>
+                <button onClick={handleButtonClick}>Зарегестрироваться</button>
             </div>
         </div>
     )
@@ -29,7 +93,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        hideSignUp: bindActionCreators(hideSignUp, dispatch)
+        hideSignUp: bindActionCreators(hideSignUp, dispatch),
+        showAlert: bindActionCreators(showAlert, dispatch),
+        hideAlert: bindActionCreators(hideAlert, dispatch)
     }
 }
 

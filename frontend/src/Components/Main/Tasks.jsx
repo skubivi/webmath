@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 
 import monthlyBg from '../../assets/Images/monthly.jpg'
 import allBg from '../../assets/Images/all_tasks.jpg'
