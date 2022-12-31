@@ -247,6 +247,20 @@ html {
       background-color: $bg-sign-up-color-hover
     }
 
+    .space {
+      flex-grow: 1;
+    }
+
+    .logout-button {
+      margin-bottom: 20px;
+      background-color: $bg-sign-up-color
+    }
+
+    .logout-button:hover {
+      background-color: $bg-sign-up-color-hover
+    }
+
+
     button:hover {
       cursor: pointer;
     }

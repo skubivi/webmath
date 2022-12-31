@@ -14,3 +14,8 @@ export const check = async () => {
     const response = await $authHost.get('api/user/auth')
     return response
 }
+
+export const getOneUser = async (id) => {
+    const response = await $host.get('api/user/' + id.toString())
+    return response
+}

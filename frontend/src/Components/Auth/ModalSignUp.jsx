@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { hideSignUp } from "../../redux/actionCreators/hideSignUp";
-import { showAlert } from '../../redux/actionCreators/showAlert';
-import { hideAlert } from '../../redux/actionCreators/hideAlert';
-import { registration } from "../../http/userAPI";
+import React, { useState } from "react"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
+import { hideSignUp } from "../../redux/actionCreators/hideSignUp"
+import { showAlert } from '../../redux/actionCreators/showAlert'
+import { hideAlert } from '../../redux/actionCreators/hideAlert'
+import { registration } from "../../http/userAPI"
+import { setUser } from '../../redux/actionCreators/setUser'
+import jwtDecode from "jwt-decode"
 
 const ModalSignUp = (props) => {
 
@@ -17,7 +19,7 @@ const ModalSignUp = (props) => {
     const [state, setState] = useState(initialState)
 
     const handleClick = () => {
-        props.hideSignUp();
+        props.hideSignUp()
     }
 
     const handleButtonClick = async () => {
@@ -28,28 +30,39 @@ const ModalSignUp = (props) => {
                 !state.username.trim() ?
                 'Поле username не может быть пустым' :
                 'Поле password не может быть пустым'
-                const id = Date.now().toString();
+                const id = Date.now().toString()
                 const title = 'Ошибка'
                 const newAlert = {message, title, id}
                 props.showAlert(newAlert)
                 setTimeout(() => {
-                    props.hideAlert(newAlert);
+                    props.hideAlert(newAlert)
                 }, 5000)
                 return
             }
             if(state.email.indexOf('@') === -1 || state.email.indexOf('.') === -1) {
                 const message = 'Поле email введено некорректно'
-                const id = Date.now().toString();
+                const id = Date.now().toString()
                 const title = 'Ошибка'
                 const newAlert = {message, title, id}
                 props.showAlert(newAlert)
                 setTimeout(() => {
-                    props.hideAlert(newAlert);
+                    props.hideAlert(newAlert)
                 }, 5000)
                 return
             }
-            const response = await registration(state.email, state.password, state.username)
-            console.log(response)
+            const token = await registration(state.email, state.password, state.username).then(response => {return response.data.token})
+            localStorage.setItem('token', token)
+            const user = jwtDecode(token)
+            props.setUser(user)
+            props.hideSignUp()
+            const message = 'Вы успешно зарегистрировались'
+            const title = 'Регистрация'
+            const id = Date.now().toString()
+            const newAlert = {message, title, id}
+            props.showAlert(newAlert)
+            setTimeout(() => {
+                props.hideAlert(newAlert)
+            }, 5000)
         } catch (e) {
             const message = e.response.data.message
             const title = 'Ошибка'
@@ -57,8 +70,9 @@ const ModalSignUp = (props) => {
             const newAlert = {message, title, id}
             props.showAlert(newAlert)
             setTimeout(() => {
-                props.hideAlert(newAlert);
+                props.hideAlert(newAlert)
             }, 5000)
+            
         }
     }
 
@@ -95,8 +109,9 @@ function mapDispatchToProps(dispatch) {
     return {
         hideSignUp: bindActionCreators(hideSignUp, dispatch),
         showAlert: bindActionCreators(showAlert, dispatch),
-        hideAlert: bindActionCreators(hideAlert, dispatch)
+        hideAlert: bindActionCreators(hideAlert, dispatch),
+        setUser: bindActionCreators(setUser, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalSignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalSignUp)
