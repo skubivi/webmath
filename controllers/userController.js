@@ -33,7 +33,7 @@ class UserController {
             const hashPassword = await bcrypt.hash(password, 5)
             const user = await Users.create({email, role, password: hashPassword, username, rating: 0})
             const token = generateJwt(user.id, email, role, username)
-            
+            console.log(token)
             return res.json({token})
         } catch (e) {
             return next(ApiError.badRequest('Введены некоректные данные'))
@@ -77,6 +77,18 @@ class UserController {
             users = await Users.findAndCountAll({attributes: ['id', 'username', 'rating'], order: [['rating', 'DESC']], limit, offset})
             return res.json(users)
         } catch (e) {
+            return next(ApiError.badRequest(e.message))
+        }
+    }
+
+    async getOne(req, res, next) {
+        try {
+            const {id} = req.params
+            console.log(id)
+            const user = await Users.findOne({where: {id}, attributes: ['id', 'username', 'rating', 'email', 'createdAt', 'role']})
+            return res.json(user)
+        } catch (e) {
+            console.log(e.message)
             return next(ApiError.badRequest(e.message))
         }
     }
