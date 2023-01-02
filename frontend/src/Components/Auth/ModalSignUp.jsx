@@ -7,6 +7,7 @@ import { hideAlert } from '../../redux/actionCreators/hideAlert'
 import { registration } from "../../http/userAPI"
 import { setUser } from '../../redux/actionCreators/setUser'
 import jwtDecode from "jwt-decode"
+import { getOneUser } from '../../http/userAPI';
 
 const ModalSignUp = (props) => {
 
@@ -52,8 +53,12 @@ const ModalSignUp = (props) => {
             }
             const token = await registration(state.email, state.password, state.username).then(response => {return response.data.token})
             localStorage.setItem('token', token)
-            const user = jwtDecode(token)
-            props.setUser(user)
+            const userId = jwtDecode(token).id
+            getOneUser(userId).then(response => {
+                const user = response.data
+                console.log(user)
+                props.setUser(user)
+            })
             props.hideSignUp()
             const message = 'Вы успешно зарегистрировались'
             const title = 'Регистрация'
@@ -72,7 +77,6 @@ const ModalSignUp = (props) => {
             setTimeout(() => {
                 props.hideAlert(newAlert)
             }, 5000)
-            
         }
     }
 
